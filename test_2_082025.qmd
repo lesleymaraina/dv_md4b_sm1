@@ -1,0 +1,183 @@
+---
+title: "Architecture of Interactive Visualization Tools"
+author: "<br><br><span style='font-size:25px;'><strong>Lesley Chapman Hannah, Ph.D., M.S.</strong></span><br>College of Graduate Studies<br>Northeast Ohio Medical University"
+
+format: 
+  revealjs:
+    #theme: solarized
+    css: style.css
+    slide-number: true
+    chalkboard: 
+      buttons: false
+    preview-links: auto
+    logo: images/Flame.jpg
+    #css: styles.css
+    
+---
+
+## <span style="font-size:80%">From Plot to System</span> {.smaller}
+
+Dashboards are a multi-layer system:
+
+- **Data ingestion**: clinical, genomic, imaging, registry, or trial data
+- **Transformation layer**: cleaning, harmonization, feature engineering
+- **Visualization layer**: static ggplot objects, reactive views, linked panels
+- **Interaction layer** filters, sliders, linked brushing, drill-down
+
+::: footer
+
+:::
+
+## <span style="font-size:80%">From Plot to System</span> {.smaller}
+
+- Data layer should be independent from the visualization layer
+- Visualization code should never contain raw data
+- Rationale, improves:
+  - Reproducibility
+  - Maintainability
+  - Transparency
+  - Testability
+  
+::: footer
+
+:::
+
+## <span style="font-size:80%">Applied Example</span> {.smaller}
+
+SEER*Explorer: Cancer Incidence Dashboard
+
+ -Visualization tool showing cancer incidence and survival data collected by the National Cancer Institute’s SEER Program
+- SEER collects incidence and survival information across multiple regions over decades, forming the evidence base for epidemiology, public health policy, and clinical research
+- allows users to explore trends by cancer type, age, sex, race, and geographic region
+
+::: footer
+
+:::
+
+## <span style="font-size:80%">Applied Example</span> {.smaller}
+
+SEER*Explorer: Cancer Incidence Dashboard - Data Layer vs. Visualization Layer
+
+- underlying cancer data (incidence counts, population denominators, survival rates) is managed independently from the visualization code
+- ensures that the data can be cleaned, validated, and pre-processed once and reused across multiple views without risk of ad-hoc error
+
+::: footer
+
+:::
+
+
+## <span style="font-size:80%"></span> {.smaller}
+
+*Navigate to dashboard*
+
+::: footer
+
+:::
+
+
+## <span style="font-size:80%">Biomedical Data Pipelines</span> {.smaller}
+
+- biomedical data pipelines ensure that the information being displayed is accurate, consistent, and interpretable
+- dashboards rely on clean, standardized, and well-processed data
+- without normalization, harmonization, quality filtering, and derived variables, visualizations could be misleading or inconsistent conclusions across cohorts
+- performing these steps upstream and version-controlling the pipeline, dashboards can provide visual summaries that support biomedical decision-making
+
+
+::: footer
+
+:::
+
+## <span style="font-size:80%">Biomedical Data Pipelines</span> {.smaller}
+
+- **normalization** : 
+  - controls for technical variability (like sequencing depth in RNA-seq) to ensure meaningful biological comparisons
+  - process of adjusting raw data so that it can be compared across samples or experiments [i.e.: TPM (Transcripts Per Million): normalizes RNA-seq read counts]
+
+- **harmonization**: 
+  - ensures consistency across datasets so they can be integrated and analyzed together
+  - aligning or mapping data from different sources to a common standard or ontology
+  - e.x.: mapping diagnosis codes from ICD (International Classification of Diseases) to categories
+
+::: footer
+
+:::
+
+## <span style="font-size:80%">Biomedical Data Pipelines</span> {.smaller}
+
+- **quality filtering** : 
+  - removing or flagging unreliable or low-quality data points before analysis
+  - protects analyses from biases or errors caused by poor-quality data
+  - e.x.: checking adverse event (AE) coding for consistency
+
+- **derived variables**: 
+  - new variables created from raw data to summarize or categorize information
+  - facilitates higher-level analyses, modeling, or clinical interpretation
+  - e.x.: risk scores: e.g., cardiovascular risk calculated from age, blood pressure, cholesterol
+
+
+::: footer
+
+:::
+
+
+## <span style="font-size:80%">Applied Example</span> {.smaller}
+
+- normalization, harmonization, quality filtering, and derived variables can be upstream preprocessing concepts in a biomedical data pipeline
+- cBioPortal provides : example where each of these pre-pipeline step are directly visible in the dashboard interface
+- cBioPortal : interactive web-based platform for exploring and analyzing cancer genomics and clinical data
+
+
+::: footer
+
+:::
+
+
+## <span style="font-size:80%">Applied Example</span> {.smaller}
+
+- integrates sequencing data (mutations, copy number alterations, structural variants) with clinical annotations across large cancer cohorts
+- every panel in cBioPortal—mutation burden plots, gene frequency tables, cancer type summaries—reflects upstream data processing choices
+
+::: footer
+
+:::
+
+## <span style="font-size:80%"></span> {.smaller}
+
+*Navigate to dashboard*
+
+::: footer
+
+:::
+
+
+## <span style="font-size:80%">Applied Example</span> {.smaller}
+
+- integrates sequencing data (mutations, copy number alterations, structural variants) with clinical annotations across large cancer cohorts
+- every panel in cBioPortal—mutation burden plots, gene frequency tables, cancer type summaries—reflects upstream data processing choices
+
+::: footer
+
+:::
+
+## <span style="font-size:80%">Summary</span> {.smaller}
+
+- interactive dashboards are multi-layer analytical systems that integrate : data ingestion, transformation, visualization, and interaction layers
+- effective dashboards depend on upstream biomedical data pipelines that ensure data are accurate, consistent, and interpretable before visualization
+- normalization, harmonization, quality filtering, and derived variables are essential preprocessing steps that prevent misleading comparisons and spurious conclusions
+
+
+::: footer
+
+:::
+
+
+## <span style="font-size:80%">Summary</span> {.smaller}
+
+- SEER Explorer illustrates how separating the data layer from the visualization layer improves reproducibility and transparency
+- cBioPortal demonstrates how these pipeline decisions become directly visible in dashboard components $\rightarrow$ every plot and table reflects prior data processing choices rather than raw data
+
+::: footer
+
+:::
+
+
